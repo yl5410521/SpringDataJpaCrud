@@ -1,0 +1,79 @@
+server:
+ port: 8086
+ servlet:
+    context-path: /
+
+spring:
+  profiles:
+    active: default
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?serverTimezone=UTC&characterEncoding=utf-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      #filters: stat,wall,log4j,config
+      initialSize: 50
+      maxActive: 200
+      maxWait: 60000
+      minIdle: 20
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: true
+      testOnReturn: false
+      poolPreparedStatements: true
+      max-open-prepared-statements: 50
+      #filters: stat;wall;log4j;config
+      maxPoolPreparedStatementPerConnectionSize: 20 
+      useGlobalDataSourceStat: true 
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500 
+      initializztion: always
+      stat-view-servlet:
+        reset-enable: false
+        login-username: admin
+        login-password: 123456
+  jpa:
+    database: mysql
+    generate-ddl: false 
+    open-in-view: true 
+    show-sql: true
+    hibernate:
+     ddl-auto: update
+     naming:
+      implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl 
+      physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+      database-platform: org.hibernate.dialect.MySQL5InnoDBDialect  #不加这句则默认为myisam引擎
+  redis:
+   database: 0       
+   host: 127.0.0.1
+   port: 6379
+   password:
+    pool:
+    #连接池最大空闲连接
+     max-idle: 8 
+     #连接池最小空闲连接 
+     min-idle: 0 
+     #连接池最大连接数
+     max-active: 8 
+      #连接池最大等待时间
+     max-wait: 1 
+       #连接超时时间 
+   timeout: 10000
+   block-when-exhausted: true
+   ssl: false
+  freemarker:
+   tempalte-loader-path: classpath:/templates
+   cache: false
+   charset: UTF-8
+   check-template-location: true
+   content-type: text/html
+   expose-request-attributes: true
+   expose-session-attributes: true
+   request-context-attribute: request
+   suffix: .ftl
+   settings:
+    datetime_format: yyyy-MM-dd HH:mm:ss
+    default_encoding: UTF-8  
